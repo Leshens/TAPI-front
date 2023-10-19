@@ -2,8 +2,8 @@
 import  express from 'express';
 import cors from "cors";
 import { faker } from '@faker-js/faker';
-import { createServer } from 'vite';
-//import {studentsRouter} from "./routes/students.js";
+import { createServer } from 'node:http';
+import {studentsRouter} from "./routes/students.js";
 //import {coursesRouter} from "./routes/courses.js";
 
 const app = express();
@@ -14,7 +14,7 @@ app.use(cors({
   'Origin':'*'
 }))
 
-//app.use('/students', studentsRouter);
+app.use('/students', studentsRouter);
 
 //app.use('/courses', coursesRouter);
 
@@ -36,8 +36,12 @@ function generateSchedule() {
   return schedule;
 }
 
+server.listen(port,() => {
+  console.log(`Strated on port: ${port}!`)
+});
+
 /*
-    /studnet/:id  ?od=  & do=
+    /student/:id  ?od=  & do=
     /grupa/:nazwa
     /wykładowca/:id
     /sala/:nr
