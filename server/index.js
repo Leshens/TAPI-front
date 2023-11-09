@@ -4,7 +4,11 @@ import cors from "cors";
 import { faker } from '@faker-js/faker';
 import { createServer } from 'node:http';
 import {studentsRouter} from "./routes/students.js";
-//import {coursesRouter} from "./routes/courses.js";
+import {coursesRouter} from "./routes/courses.js";
+import { lecturersRouter } from "./routes/lecturers.js";
+import { groupsRouter } from "./routes/groups.js";
+import { roomsRouter } from "./routes/rooms.js";
+
 
 const app = express();
 const port = 3000;
@@ -15,26 +19,16 @@ app.use(cors({
 }))
 
 app.use('/students', studentsRouter);
-
-//app.use('/courses', coursesRouter);
+app.use("/lecturers", lecturersRouter);
+app.use("/courses", coursesRouter);
+app.use("/groups", groupsRouter);
+app.use("/rooms", roomsRouter);
 
 app.get('hello/:id',(req, res) => {
   faker.internet.email()
   const id = req.params.id;
   res.send(faker.internet.email())
 })
-
-function generateSchedule() {
-
-  const schedule = {
-    day: faker.date.weekday(),
-    group: faker.person.zodiacSign(),
-    time: faker.date.future().toLocaleTimeString(),
-    course: faker.lorem.word(5),
-    location: faker.location.city(),
-  };
-  return schedule;
-}
 
 server.listen(port,() => {
   console.log(`Strated on port: ${port}!`)
